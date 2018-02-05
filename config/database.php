@@ -41,12 +41,12 @@ return [
 
         'mysql' => [
             'driver' => 'mysql',
-            'host' => env('DB_HOST', '127.0.0.1'),
-            'port' => env('DB_PORT', '3306'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
-            'unix_socket' => env('DB_SOCKET', ''),
+            'host' => env('CSDOCS_DB_HOST', '127.0.0.1'),
+            'port' => env('CSDOCS_DB_PORT', '3306'),
+            'database' => env('CSDOCS_DB_DATABASE', 'cs-docs'),
+            'username' => env('CSDOCS_DB_USERNAME', 'root'),
+            'password' => env('CSDOCS_DB_PASSWORD', 'Admcs1234567'),
+            'unix_socket' => env('CSDOCS_DB_SOCKET', ''),
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
             'prefix' => '',
