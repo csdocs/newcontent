@@ -20,7 +20,7 @@ class CompaniesValidator extends LaravelValidator
     protected $rules = [
         ValidatorInterface::RULE_CREATE => [],
         ValidatorInterface::RULE_UPDATE => [],
-        ValidatorInterface::RULE_GET => [
+        "get" => [
             "idInstance" => 'required|integer|min:1'
         ]
     ];

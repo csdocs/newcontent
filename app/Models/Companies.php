@@ -21,5 +21,6 @@ class Companies extends Model implements Transformable
      * @var array
      */
     protected $fillable = [];
-
+    protected $connection = "tsj";
+    protected $table = "CSDocs_Empresas";
 }

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Contracts\Repositories\CompaniesRepository;
+use App\Contracts\Repositories\InstancesRepository;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -29,16 +31,29 @@ class RepositoriesController extends Controller
      */
     protected $validator;
 
+    protected $companies;
+
+    protected $instances;
+
     /**
      * RepositoriesController constructor.
      *
      * @param RepositoriesRepository $repository
      * @param RepositoriesValidator $validator
+     * @param CompaniesRepository
+     * @param InstancesRepository
      */
-    public function __construct(RepositoriesRepository $repository, RepositoriesValidator $validator)
+    public function __construct(
+        RepositoriesRepository $repository,
+        RepositoriesValidator $validator,
+        CompaniesRepository $companiesRepository,
+        InstancesRepository $instancesRepository
+)
     {
         $this->repository = $repository;
         $this->validator  = $validator;
+        $this->companies = $companiesRepository;
+        $this->instances = $instancesRepository;
     }
 
     /**
@@ -46,19 +61,31 @@ class RepositoriesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
-        $repositories = $this->repository->all();
+        try{
+            $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
+            $this->validator->with($request->all())->passesOrFail("get");
 
-        if (request()->wantsJson()) {
+            $instance = $this->instances->findWhere(["IdInstancia" => $request->input("idInstance")])->first();
 
-            return response()->json([
-                'data' => $repositories,
-            ]);
+            if(is_null($instance))
+                return response()->json(["status" => false, "message" => "Instance not found"]);
+
+            $company = $this->companies->findWhere(["IdEmpresa" => $request->input("idCompany")])->first();
+
+            if(is_null($company))
+                return response()->json(["status" => false, "message" => "Company not found"]);
+
+            $repositories = $this->repository->findWhere(["ClaveEmpresa" => $company->ClaveEmpresa]);
+
+            return response()->json(['data' => $repositories,]);
+        }catch (ValidatorException $e){
+            return response()->json(["status" => false, "message" => $e->getMessageBag()]);
+        }catch (\Exception $e){
+            return response()->json(["status" => false, "message" => $e->getMessage()]);
         }
 
-        return view('repositories.index', compact('repositories'));
     }
 
     /**

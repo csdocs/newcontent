@@ -12,6 +12,8 @@ use \Prettus\Validator\LaravelValidator;
  */
 class RepositoriesValidator extends LaravelValidator
 {
+    const RULE_DELETE = "delete";
+    const RULE_GET = "get";
     /**
      * Validation Rules
      *
@@ -20,5 +22,10 @@ class RepositoriesValidator extends LaravelValidator
     protected $rules = [
         ValidatorInterface::RULE_CREATE => [],
         ValidatorInterface::RULE_UPDATE => [],
+        "delete" => [],
+        "get" => [
+            "idCompany" => "integer|required|min:1",
+            "idInstance" => "integer|required|min:1",
+        ],
     ];
 }

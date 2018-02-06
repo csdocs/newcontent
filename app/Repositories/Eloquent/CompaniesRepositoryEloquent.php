@@ -45,5 +45,14 @@ class CompaniesRepositoryEloquent extends BaseRepository implements CompaniesRep
     {
         $this->pushCriteria(app(RequestCriteria::class));
     }
-    
+
+    public function setConnection($connection)
+    {
+       $this->model->setTable($connection);
+
+       return $this->model->refresh();
+//        $this->model->setTable("holi");
+//        $this->model->refresh();
+//       echo "<pre>"; var_dump($this->model->getTable()); die("hol");
+    }
 }

@@ -54,6 +54,21 @@ return [
             'engine' => null,
         ],
 
+        'tsj' => [
+            'driver' => 'mysql',
+            'host' => env('TSJ_DB_HOST', '127.0.0.1'),
+            'port' => env('TSJ_DB_PORT', '3306'),
+            'database' => env('TSJ_DB_DATABASE', 'tsj'),
+            'username' => env('TSJ_DB_USERNAME', 'root'),
+            'password' => env('TSJ_DB_PASSWORD', 'Admcs1234567'),
+            'unix_socket' => env('TSJ_DB_SOCKET', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'strict' => true,
+            'engine' => null,
+        ],
+
         'pgsql' => [
             'driver' => 'pgsql',
             'host' => env('DB_HOST', '127.0.0.1'),

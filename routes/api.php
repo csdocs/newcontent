@@ -19,3 +19,4 @@ use Illuminate\Http\Request;
 
 Route::match(['get', 'post'], "/instances" , "InstancesController@index");
 Route::match(['get', 'post'], "/companies" , "CompaniesController@index");
+Route::match(['get', 'post'], "/repositories" , "RepositoriesController@index");

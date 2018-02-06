@@ -62,14 +62,16 @@ class CompaniesController extends Controller
     public function index(Request $request)
     {
         try {
-            $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
+            $this->Companies->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
 
-            $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_GET);
+            $this->validator->with($request->all())->passesOrFail("get");
 
             $instance = $this->Instances->findWhere(["IdInstancia" => $request->input("idInstance")])->first();
 
             if(is_null($instance))
                 return response()->json(["status" => false, "message" => "Instance not found"]);
+
+//            $this->Companies = $this->Companies->setConnection("tsj");
 
             $companies = $this->Companies->all();
 
