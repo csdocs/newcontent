@@ -7,35 +7,35 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use Prettus\Validator\Contracts\ValidatorInterface;
 use Prettus\Validator\Exceptions\ValidatorException;
-use App\Http\Requests\InstancesCreateRequest;
-use App\Http\Requests\InstancesUpdateRequest;
-use App\Contracts\Repositories\InstancesRepository;
-use App\Validators\InstancesValidator;
+use App\Http\Requests\RepositoriesCreateRequest;
+use App\Http\Requests\RepositoriesUpdateRequest;
+use App\Contracts\Repositories\RepositoriesRepository;
+use App\Validators\RepositoriesValidator;
 
 /**
- * Class InstancesController.
+ * Class RepositoriesController.
  *
  * @package namespace App\Http\Controllers;
  */
-class InstancesController extends Controller
+class RepositoriesController extends Controller
 {
     /**
-     * @var InstancesRepository
+     * @var RepositoriesRepository
      */
     protected $repository;
 
     /**
-     * @var InstancesValidator
+     * @var RepositoriesValidator
      */
     protected $validator;
 
     /**
-     * InstancesController constructor.
+     * RepositoriesController constructor.
      *
-     * @param InstancesRepository $repository
-     * @param InstancesValidator $validator
+     * @param RepositoriesRepository $repository
+     * @param RepositoriesValidator $validator
      */
-    public function __construct(InstancesRepository $repository, InstancesValidator $validator)
+    public function __construct(RepositoriesRepository $repository, RepositoriesValidator $validator)
     {
         $this->repository = $repository;
         $this->validator  = $validator;
@@ -49,38 +49,38 @@ class InstancesController extends Controller
     public function index()
     {
         $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
-        $instances = $this->repository->all();
+        $repositories = $this->repository->all();
 
-//        if (request()->wantsJson()) {
+        if (request()->wantsJson()) {
 
             return response()->json([
-                'data' => $instances,
+                'data' => $repositories,
             ]);
-//        }
+        }
 
-//        return view('instances.index', compact('instances'));
+        return view('repositories.index', compact('repositories'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  InstancesCreateRequest $request
+     * @param  RepositoriesCreateRequest $request
      *
      * @return \Illuminate\Http\Response
      *
      * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
-    public function store(InstancesCreateRequest $request)
+    public function store(RepositoriesCreateRequest $request)
     {
         try {
 
             $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
 
-            $instance = $this->repository->create($request->all());
+            $repository = $this->repository->create($request->all());
 
             $response = [
-                'message' => 'Instances created.',
-                'data'    => $instance->toArray(),
+                'message' => 'Repositories created.',
+                'data'    => $repository->toArray(),
             ];
 
             if ($request->wantsJson()) {
@@ -110,16 +110,16 @@ class InstancesController extends Controller
      */
     public function show($id)
     {
-        $instance = $this->repository->find($id);
+        $repository = $this->repository->find($id);
 
         if (request()->wantsJson()) {
 
             return response()->json([
-                'data' => $instance,
+                'data' => $repository,
             ]);
         }
 
-        return view('instances.show', compact('instance'));
+        return view('repositories.show', compact('repository'));
     }
 
     /**
@@ -131,32 +131,32 @@ class InstancesController extends Controller
      */
     public function edit($id)
     {
-        $instance = $this->repository->find($id);
+        $repository = $this->repository->find($id);
 
-        return view('instances.edit', compact('instance'));
+        return view('repositories.edit', compact('repository'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  InstancesUpdateRequest $request
+     * @param  RepositoriesUpdateRequest $request
      * @param  string            $id
      *
      * @return Response
      *
      * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
-    public function update(InstancesUpdateRequest $request, $id)
+    public function update(RepositoriesUpdateRequest $request, $id)
     {
         try {
 
             $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_UPDATE);
 
-            $instance = $this->repository->update($request->all(), $id);
+            $repository = $this->repository->update($request->all(), $id);
 
             $response = [
-                'message' => 'Instances updated.',
-                'data'    => $instance->toArray(),
+                'message' => 'Repositories updated.',
+                'data'    => $repository->toArray(),
             ];
 
             if ($request->wantsJson()) {
@@ -194,11 +194,11 @@ class InstancesController extends Controller
         if (request()->wantsJson()) {
 
             return response()->json([
-                'message' => 'Instances deleted.',
+                'message' => 'Repositories deleted.',
                 'deleted' => $deleted,
             ]);
         }
 
-        return redirect()->back()->with('message', 'Instances deleted.');
+        return redirect()->back()->with('message', 'Repositories deleted.');
     }
 }

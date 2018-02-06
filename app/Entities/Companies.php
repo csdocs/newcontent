@@ -9,4 +9,6 @@ class Companies extends Model
     protected $fillable = [
 
     ];
+
+    protected $connection = "tsj";
 }

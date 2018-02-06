@@ -7,11 +7,11 @@ use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
 
 /**
- * Class Instances.
+ * Class Repositories.
  *
  * @package namespace App\Models;
  */
-class Instances extends Model implements Transformable
+class Repositories extends Model implements Transformable
 {
     use TransformableTrait;
 
@@ -21,5 +21,5 @@ class Instances extends Model implements Transformable
      * @var array
      */
     protected $fillable = [];
-    protected $table = "instancias";
+
 }

@@ -17,4 +17,5 @@ use Illuminate\Http\Request;
 //    return $request->user();
 //});
 
-Route::match(['get', 'post'], "InstancesController@index");
+Route::match(['get', 'post'], "/instances" , "InstancesController@index");
+Route::match(['get', 'post'], "/companies" , "CompaniesController@index");
